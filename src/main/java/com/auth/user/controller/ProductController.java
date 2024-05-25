@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.auth.user.dto.AddBalanceRequest;
 import com.auth.user.dto.AuthRequest;
+import com.auth.user.dto.Product;
 import com.auth.user.entity.UserInfo;
 import com.auth.user.exception.UserNotFoundException;
 import com.auth.user.exception.UserServiceException;
@@ -50,12 +51,29 @@ public class ProductController {
 
 	
 
-	@GetMapping("/auction/home")
-	public String getAuctionHome() {
+	@PostMapping("/add")
+	public String addProduct(@RequestBody Product product) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserInfoDetails currentUser = (UserInfoDetails) authentication.getPrincipal();
 		return userInfoDetailService.getAuctionHome(currentUser.getToken());
 		
 	}
+	
+	@PostMapping("/update/{id}")
+	public String editProduct() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserInfoDetails currentUser = (UserInfoDetails) authentication.getPrincipal();
+		return userInfoDetailService.getAuctionHome(currentUser.getToken());
+		
+	}
+	
+	@GetMapping("/all")
+	public String getAllProducts() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		UserInfoDetails currentUser = (UserInfoDetails) authentication.getPrincipal();
+		return userInfoDetailService.getAuctionHome(currentUser.getToken());
+		
+	}
+	
 	
 }

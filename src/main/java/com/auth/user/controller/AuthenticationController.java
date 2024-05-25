@@ -61,7 +61,6 @@ public class AuthenticationController {
 		return ResponseEntity.ok(userInfoDetailService.addUser(userInfo));
 	}
 
-
 	@PostMapping("/authenticate")
 	public String authenticateAndGetToken(@RequestBody AuthRequest authRequest) throws UserServiceException {
 		String token=null;

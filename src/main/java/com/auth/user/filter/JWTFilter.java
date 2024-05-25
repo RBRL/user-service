@@ -56,7 +56,6 @@ public class JWTFilter extends OncePerRequestFilter {
 				SecurityContextHolder.getContext().setAuthentication(authToken);
 			}
 		}
-		
 		filterChain.doFilter(request, response);
 		}catch(Exception ex) {
 			 handlerExceptionResolver.resolveException(request, response, null, ex);
