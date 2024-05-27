@@ -1,11 +1,16 @@
 package com.auth.user.dto;
 
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.auth.user.util.ProductStatus;
+
+import com.auth.user.util.AuctionStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.auth.user.config.LocalDateTimeDeserializer;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -16,18 +21,16 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product {
+public class Auction {
 	private Long id;
-	private String name;
-	private String category;
-	private String sellerName;
+	private Product product;
+	private String buyerId;
 	@Builder.Default
-	BigDecimal askPrice = new BigDecimal(0);
-	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-	private LocalDateTime startTime;
-	@JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
+	BigDecimal bidPrice = new BigDecimal(0);
+	@JsonDeserialize(using=LocalDateTimeDeserializer.class)
 	private LocalDateTime endTime;
 	@JsonProperty
-	private ProductStatus status;
+	private AuctionStatus status;
+	
 }
 

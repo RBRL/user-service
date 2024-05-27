@@ -11,7 +11,7 @@ public class UserServiceException extends Exception {
 		super(t.getMessage());
 		
 	}
-	public UserServiceException(Throwable t,String message){
+	public UserServiceException(Throwable t,String message) {
 		super(message,t);
 	}
 }

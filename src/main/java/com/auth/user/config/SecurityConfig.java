@@ -43,7 +43,7 @@ public class SecurityConfig {
 		 http.csrf().disable().authorizeHttpRequests()
 				.antMatchers("/auth/home","/h2-console/**","/auth/register","/auth/authenticate").permitAll()
 				.and()
-				.authorizeHttpRequests().antMatchers("/user/**","/product/**").authenticated()
+				.authorizeHttpRequests().antMatchers("/user/**").authenticated()
 				.and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 				.and()

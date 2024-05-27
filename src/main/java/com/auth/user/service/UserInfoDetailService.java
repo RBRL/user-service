@@ -1,6 +1,7 @@
 package com.auth.user.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,6 +20,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import com.auth.user.controller.AuthenticationController;
 import com.auth.user.dto.AddBalanceRequest;
 import com.auth.user.entity.UserInfo;
 import com.auth.user.exception.UserNotFoundException;
@@ -26,7 +28,10 @@ import com.auth.user.exception.UserServiceException;
 import com.auth.user.model.UserInfoDetails;
 import com.auth.user.repository.UserInfoRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class UserInfoDetailService implements UserDetailsService {
 
 	@Autowired
@@ -35,11 +40,6 @@ public class UserInfoDetailService implements UserDetailsService {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
-	 
-    @Bean
-    public RestTemplate restTemplate() {
-        return new RestTemplate();
-    }
 
 	public String addUser(UserInfo userInfo) throws UserServiceException {
 		try {
@@ -47,6 +47,7 @@ public class UserInfoDetailService implements UserDetailsService {
 			userInfoRepository.save(userInfo);
 			return "User " + userInfo.getFirstName() + " added to system ";
 		} catch (Exception ex) {
+			log.info("Error while adding user "+ex. getMessage());
 			throw new UserServiceException(ex.getMessage());
 		}
 
@@ -64,9 +65,11 @@ public class UserInfoDetailService implements UserDetailsService {
 			if (userInfo.isPresent()) {
 				return userInfo.get();
 			} else {
+				log.info("Error while viewing user with "+id);
 				throw new UserNotFoundException("User Not found with id " + id);
 			}
 		} catch (Exception e) {
+			log.info("Error while viewing user with "+e.getMessage());
 			throw new UserServiceException(e.getMessage());
 		}
 
@@ -85,6 +88,7 @@ public class UserInfoDetailService implements UserDetailsService {
 				throw new UserNotFoundException("User Not found with id " + addBalanceRequest.getId());
 			}
 		} catch (Exception ex) {
+			log.error("Error while adding balance to wallet of user with id "+ ex.getMessage()) ;
 			throw new UserServiceException(ex.getMessage());
 		}
 	}
@@ -98,22 +102,10 @@ public class UserInfoDetailService implements UserDetailsService {
 				throw new UserServiceException("Error while fetching user wallet balance");
 			}
 		} catch (Exception ex) {
+			log.error("Error while viewing wallet banlance") ;
 			throw new UserServiceException(ex.getMessage());
 		}
 	}
 
-	public String getAuctionHome(String token) {
-		String url = "http://localhost:8081/auction/home";
-		
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(MediaType.APPLICATION_JSON);
-		String jwtToken = "Bearer " + token;
-		headers.set("Authorization", jwtToken);
-		HttpEntity<String> jwtEntity = new HttpEntity<String>(headers);
-		// Use Token to get Response
-		ResponseEntity<String> helloResponse = restTemplate().exchange(url, HttpMethod.GET, jwtEntity,
-				String.class);
-		return helloResponse.getBody();
-	}
-
+	
 }

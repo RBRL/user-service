@@ -27,7 +27,7 @@ public class GlobalUserExceptionHandler {
 	}
 	
 	@ExceptionHandler(value=UserServiceException.class)
-	public ResponseEntity<Object> handleCustomerNotFoundException(
+	public ResponseEntity<Object> handleUserNotFoundException(
 			UserServiceException ex) {
 		    Map<String, Object> body = new HashMap<>();
 		    body.put("message", ex.getMessage());
@@ -50,7 +50,7 @@ public class GlobalUserExceptionHandler {
 	        }
 
 	        if (errorResponse == null) {
-	        	 errorResponse = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(), "Internal Service Exception");
+	        	 errorResponse = new ErrorResponse(HttpStatus.FORBIDDEN.value(), exception.getMessage());
 	        }
 			 return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
 	    }

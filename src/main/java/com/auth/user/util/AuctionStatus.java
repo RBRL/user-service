@@ -7,15 +7,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 
-public enum ProductStatus {
-		AVAILABLE("Available"),
-	    SOLD("Sold"),
-	    UNSOLD("Unsold"),
-	    DEACTIVATED("Deactivated") ;
+public enum AuctionStatus {
+		INPROGRESS("Inprogress"),
+	    ENDED("Ended"),
+	    WON("Won"),
+	    LOST("Lost") ;
 	    
 	   
 	    private final String name;
-		ProductStatus(String name)
+		AuctionStatus(String name)
 		{ this.name = name; }
 	    
 	    @JsonValue
@@ -24,8 +24,8 @@ public enum ProductStatus {
 	    }
 	    
 	    @JsonCreator
-	    public static ProductStatus getValue(final String value) {
-	    	for(ProductStatus item : values()){
+	    public static AuctionStatus getValue(final String value) {
+	    	for(AuctionStatus item : values()){
 	            if(item.name.equalsIgnoreCase(value)){
 	                return item;
 	            }
