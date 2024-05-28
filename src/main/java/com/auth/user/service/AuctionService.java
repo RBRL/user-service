@@ -2,10 +2,10 @@ package com.auth.user.service;
 
 import java.util.List;
 
-import com.auth.user.dto.Product;
-import com.auth.user.exception.UserServiceException;
 import com.auth.user.dto.Auction;
 import com.auth.user.dto.Bid;
+import com.auth.user.dto.Product;
+import com.auth.user.exception.UserServiceException;
 
 public interface AuctionService {
 

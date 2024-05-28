@@ -3,14 +3,7 @@ package com.auth.user.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import com.auth.user.client.AuctionClient;
 import com.auth.user.dto.Auction;
@@ -51,6 +44,7 @@ public class AuctionServiceImpl implements AuctionService {
 			Bid bidAdded = auctionClient.bidOnProduct(bid, token);
 			return bidAdded;
 		} catch (Exception ex) {
+			log.error("Error while placing a bid");
 			throw new UserServiceException(ex.getMessage());
 		}
 

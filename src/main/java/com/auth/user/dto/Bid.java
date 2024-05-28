@@ -2,7 +2,8 @@ package com.auth.user.dto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.auth.user.util.AuctionStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;

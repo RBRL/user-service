@@ -1,7 +1,8 @@
 package com.auth.user.client;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.*;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,9 +21,11 @@ import com.auth.user.dto.Auction;
 import com.auth.user.dto.Bid;
 import com.auth.user.dto.Product;
 import com.auth.user.exception.AuctionClientException;
-import com.auth.user.exception.UserServiceException;
+
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@Slf4j
 public class AuctionClient {
 
 	@Autowired
@@ -33,45 +36,50 @@ public class AuctionClient {
 
 	@Value("${auction.service.baseurl}")
 	public String BASE_URL;
-
+	
+	public static final  String AUCTION_HOME = "/home";
+	public static final  String ADD_PRODUCTS = "/products/add";
+	public static final  String VIEW_ALL = "/products/all";
+	public static final  String BID_ONPRODUCT = "/bid";
+	public static final  String END_AUCTION  = "/end/{id}";;
+	//TODO move client rest template creation and setting token to common place
 	public String getAuctionHome(String token) throws AuctionClientException {
 		try {
-			String path = "/home";
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			String jwtToken = "Bearer " + token;
 			headers.set("Authorization", jwtToken);
 			HttpEntity<String> jwtEntity = new HttpEntity<String>(headers);
 			// Use Token to get Response
-			ResponseEntity<String> helloResponse = restTemplate.exchange(AUCTION_HOST + BASE_URL + path, HttpMethod.GET,
+			ResponseEntity<String> helloResponse = restTemplate.exchange(AUCTION_HOST + BASE_URL + AUCTION_HOME, HttpMethod.GET,
 					jwtEntity, String.class);
 			return helloResponse.getBody();
 		} catch (Exception e) {
+			log.error("Auction service ping error");
 			throw new AuctionClientException(e.getMessage());
 		}
 	}
 
 	public String addProduct(List<Product> product, String token) throws AuctionClientException {
 		try {
-			String path = "/product/add";
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			String jwtToken = "Bearer " + token;
 			headers.set("Authorization", jwtToken);
 			// set request body
 			HttpEntity<List<Product>> requestEntity = new HttpEntity<>(product, headers);
-
-			ResponseEntity<String> reponse = restTemplate.exchange(AUCTION_HOST + BASE_URL + path, HttpMethod.POST,
+			// Use Token to get Response
+			ResponseEntity<String> reponse = restTemplate.exchange(AUCTION_HOST + BASE_URL + ADD_PRODUCTS, HttpMethod.POST,
 					requestEntity, String.class);
 			return reponse.getBody();
 		} catch (Exception e) {
+			log.error("Cannot save Products");
 			throw new AuctionClientException(e.getMessage());
 		}
 	}
 
 	public List<Product> viewProducts(String token) throws AuctionClientException {
 		try {
-			String path = "/product/all";
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			String jwtToken = "Bearer " + token;
@@ -79,21 +87,22 @@ public class AuctionClient {
 			// set request body
 			HttpEntity<String> requestEntity = new HttpEntity<String>(headers);
 
-			// Use Token to get Response
+			
 			ParameterizedTypeReference<List<Product>> parameter = new ParameterizedTypeReference<List<Product>>() {
 			};
-
-			ResponseEntity<List<Product>> response = restTemplate.exchange(AUCTION_HOST + BASE_URL + path,
+			// Use Token to get Response
+			ResponseEntity<List<Product>> response = restTemplate.exchange(AUCTION_HOST + BASE_URL + VIEW_ALL,
 					HttpMethod.GET, requestEntity, parameter);
 			return response.getBody();
 		} catch (Exception e) {
+			log.error("Cannot view all Products");
 			throw new AuctionClientException(e.getMessage());
 		}
 	}
 
 	public Bid bidOnProduct(Bid bid, String token) throws AuctionClientException {
 		try {
-			String path = "/bid";
+			
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			String jwtToken = "Bearer " + token;
@@ -101,14 +110,15 @@ public class AuctionClient {
 			// set request body
 			HttpEntity<Bid> requestEntity = new HttpEntity<Bid>(bid, headers);
 
-			// Use Token to get Response
+			
 			ParameterizedTypeReference<Bid> parameter = new ParameterizedTypeReference<Bid>() {
 			};
-
-			ResponseEntity<Bid> response = restTemplate.exchange(AUCTION_HOST + BASE_URL + path, HttpMethod.POST,
+			// Use Token to get Response
+			ResponseEntity<Bid> response = restTemplate.exchange(AUCTION_HOST + BASE_URL + BID_ONPRODUCT, HttpMethod.POST,
 					requestEntity, parameter);
 			return response.getBody();
 		} catch (Exception ex) {
+			log.error("Error in Auction client biddong on product");
 			throw new AuctionClientException(ex.getMessage());
 
 		}
@@ -116,7 +126,7 @@ public class AuctionClient {
 
 	public Auction endAuction(Long auction, String token) throws AuctionClientException {
 		try {
-			String path = "/end/{id}";
+			
 			HttpHeaders headers = new HttpHeaders();
 			headers.setContentType(MediaType.APPLICATION_JSON);
 			String jwtToken = "Bearer " + token;
@@ -127,13 +137,14 @@ public class AuctionClient {
 			Map<String, String> queryParamMap = new HashMap<>();
 			queryParamMap.put("id", String.valueOf(auction));
 
-			UriComponents builder = UriComponentsBuilder.fromHttpUrl(AUCTION_HOST + BASE_URL).path(path)
+			UriComponents builder = UriComponentsBuilder.fromHttpUrl(AUCTION_HOST + BASE_URL).path(END_AUCTION)
 					.buildAndExpand(queryParamMap);
 
 			ResponseEntity<Auction> response = restTemplate.exchange(builder.toUriString(), HttpMethod.POST,
 					requestEntity, Auction.class);
 			return response.getBody();
 		} catch (Exception e) {
+			log.error("Error in Auction client ending an aution");
 			throw new AuctionClientException(e.getMessage());
 		}
 	}

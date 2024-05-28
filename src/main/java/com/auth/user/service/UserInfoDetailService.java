@@ -1,26 +1,15 @@
 package com.auth.user.service;
 
+import java.math.BigDecimal;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Optional;
-
-import com.auth.user.controller.AuthenticationController;
 import com.auth.user.dto.AddBalanceRequest;
 import com.auth.user.entity.UserInfo;
 import com.auth.user.exception.UserNotFoundException;
@@ -40,7 +29,13 @@ public class UserInfoDetailService implements UserDetailsService {
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	
-
+	/**
+	 * Unauthenticated API
+	 * Register a new user with specified role to system 
+	 * @param userInfo
+	 * @return
+	 * @throws UserServiceException
+	 */
 	public String addUser(UserInfo userInfo) throws UserServiceException {
 		try {
 			userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
@@ -52,13 +47,26 @@ public class UserInfoDetailService implements UserDetailsService {
 		}
 
 	}
-
+	/**
+	 * View user by username.
+	 * @param userInfo
+	 * @return
+	 * @t
+	 */
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<UserInfo> userInfo = userInfoRepository.findByUserName(username);
 		return userInfo.map(UserInfoDetails::new)
 				.orElseThrow(() -> new UsernameNotFoundException("user not found with " + username));
 	}
 
+	/**
+	 * Unauthenticated API
+	 * View a new single user details with specified id 
+	 * @param id
+	 * @return
+	 * @throws UserServiceException
+	 * @throws UserNotFoundException
+	 */
 	public UserInfo getUser(Long id) throws UserServiceException, UserNotFoundException {
 		try {
 			Optional<UserInfo> userInfo = userInfoRepository.findById(id);
@@ -75,6 +83,13 @@ public class UserInfoDetailService implements UserDetailsService {
 
 	}
 
+	//TODO for future use for handling  cases wallet has enough amount and process payment is bid is won.
+	/**
+	 * Add balance to user's wallet
+	 * @param addBalanceRequest
+	 * @return
+	 * @throws UserServiceException
+	 */
 	public String addWalletBalance(AddBalanceRequest addBalanceRequest) throws UserServiceException {
 		try {
 			Optional<UserInfo> userInfo = userInfoRepository.findById(addBalanceRequest.getId());
@@ -93,6 +108,12 @@ public class UserInfoDetailService implements UserDetailsService {
 		}
 	}
 	
+	/**
+	 * View wallet balance
+	 * @param userName
+	 * @return
+	 * @throws UserServiceException
+	 */
 	public String viewWalletBalance(String userName) throws UserServiceException {
 		try {
 			Optional<UserInfo> userInfo = userInfoRepository.findByUserName(userName);

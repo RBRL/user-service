@@ -1,5 +1,11 @@
 package com.auth.user;
 
+import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -11,20 +17,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.web.client.RestTemplate;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.auth.user.dto.AuthRequest;
 import com.auth.user.entity.UserInfo;
 import com.auth.user.exception.UserServiceException;
@@ -33,7 +29,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootTest(classes=UserServiceApplication.class)
 @AutoConfigureMockMvc
-public class JWTUtilTest {
+public class UserServiceTest {
 
 	@Autowired
     private MockMvc mvc;
@@ -113,7 +109,7 @@ public class JWTUtilTest {
                 ).andReturn();
 
         ArrayList<String> roles = new ArrayList();
-        roles.add("ROLE_ADMIN");
+        roles.add("ROLE_USER");
         String token = jwtUtil.generateToken("user2",roles);
         assertNotNull(token);
         mvc.perform(MockMvcRequestBuilders.get("/user/wallet/balance").header("Authorization", "Bearer "+token)).andExpect(status().isOk());
@@ -145,8 +141,7 @@ public class JWTUtilTest {
         someException.ifPresent( (se) -> assertThat(se, is(notNullValue())));
         someException.ifPresent( (se) -> assertThat(se, is(instanceOf(UserServiceException.class))));
        
-
-    	
     }
+    
 
 }
