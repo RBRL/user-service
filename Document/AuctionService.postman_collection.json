@@ -1,0 +1,225 @@
+{
+	"info": {
+		"_postman_id": "5b33f9c0-4a22-4e95-82e8-4d5f2a6565cb",
+		"name": "AuctionService",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34608995"
+	},
+	"item": [
+		{
+			"name": "All Products",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcxNjU3NzU1MiwiZXhwIjoxNzE2NTc5MzUyfQ.K0mAXzb6vw1vSIGb0wm2qbS9_9J9bZkcu6euGWhfyNQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/auction/home",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auction",
+						"home"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Welcome",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcxNjU3NzU1MiwiZXhwIjoxNzE2NTc5MzUyfQ.K0mAXzb6vw1vSIGb0wm2qbS9_9J9bZkcu6euGWhfyNQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/auction/home",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auction",
+						"home"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "All Auctions",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcxNjU3NzU1MiwiZXhwIjoxNzE2NTc5MzUyfQ.K0mAXzb6vw1vSIGb0wm2qbS9_9J9bZkcu6euGWhfyNQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/auction/auction/all",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auction",
+						"auction",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Bid For product",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcxNjU3NzU1MiwiZXhwIjoxNzE2NTc5MzUyfQ.K0mAXzb6vw1vSIGb0wm2qbS9_9J9bZkcu6euGWhfyNQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n\"prodId\":1,\n\"buyerId\":\"user5\",\n\"biddingPrice\":\"207.00\",\n\"status\":null\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/auction/bid",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auction",
+						"bid"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add  products",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyMSIsImlhdCI6MTcxNjU3NzU1MiwiZXhwIjoxNzE2NTc5MzUyfQ.K0mAXzb6vw1vSIGb0wm2qbS9_9J9bZkcu6euGWhfyNQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "[{\n\"name\":\"iPhone\",\n\"category\":\"Electronics\",\n\"sellerName\":\"user1\",\n\"askPrice\":300,\n\"startTime\":\"12-02-2024 10:00:00\",\n\"endTime\": \"13-02-2024 10:00:00\",\n\"status\":\"Available\"\n},\n{\"name\":\"MI\",\n\"category\":\"Electronics\",\n\"askPrice\":150,\n\"sellerName\":\"user1\",\n\"startTime\":\"12-02-2024 10:00:00\",\n\"endTime\": \"13-02-2024 10:00:00\",\n\"status\":\"Available\"\n}\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/auction/product/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auction",
+						"product",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "End Auction for a product",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/auction/end/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"auction",
+						"end",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

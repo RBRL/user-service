@@ -1,0 +1,109 @@
+{
+	"info": {
+		"_postman_id": "93df5c24-0a36-4afc-99fb-ee798e237a4a",
+		"name": "RuleEngine",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34608995"
+	},
+	"item": [
+		{
+			"name": "allRulesByDomain",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "/get-all-rules/",
+					"path": [
+						"get-all-rules",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Rule for Loan",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"creditScore\": 900,\n \"firstName\": \"Mark\",\n \"lastName\": \"K\",\n \"age\": \"25\",\n \"accountNumber\": 123456789,\n \"bank\": \"ABC BANK\",\n \"requestedLoanAmount\": 3500000.0,\n \"monthlySalary\": 70000.0,\n \"employed\":true,\n \"relationShipStatus\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/LEASING",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"LEASING"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Rule for Loan Empty",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"creditScore\": 100,\n \"firstName\": \"Mark\",\n \"lastName\": \"K\",\n \"age\": \"25\",\n \"accountNumber\": 123456789,\n \"bank\": \"ABC BANK\",\n \"requestedLoanAmount\": 350000000.0,\n \"monthlySalary\": 10000.0,\n \"employed\":true,\n \"relationShipStatus\": 2\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/leasing",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"leasing"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Rule for Leasing",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n \"creditScore\": 900,\n \"firstName\": \"Mark\",\n \"lastName\": \"K\",\n \"age\": \"25\",\n \"accountNumber\": 123456789,\n \"bank\": \"ABC BANK\",\n \"requestedLoanAmount\": 3500000.0,\n \"monthlySalary\": 50000.0,\n \"employed\":true,\n \"relationShipStatus\": 2,\n \"durationInMonths\":24\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/leasing",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"leasing"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
