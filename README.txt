@@ -6,12 +6,12 @@ Seller can end auction and view result for product. Buyer and price.
 
 Implemented use cases
 
-•	As a Seller, I want to be able to register a new product for auction and specify a minimum bid
+•As a Seller, I want to be able to register a new product for auction and specify a minimum bid.
    -/products/add with ask price
    -/product/all
-•	As a Buyer, I want to bid in an auction any number of times
+•As a Buyer, I want to bid in an auction any number of times.
   -/product/bid
-•	As a Seller, I want to be able to end the action and see the winner and their bid
+•	As a Seller, I want to be able to end the action and see the winner and their bid.
   -/product/end/{id}  returns an auction entry with buyerid and biddingprice.
 
 
