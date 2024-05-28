@@ -3,6 +3,7 @@ User can be a buyer or seller.
 Buyers can further place bid on prducts created by seller.
 Seller can end auction and view result for product. Buyer and price.
  **REFER /Document/Steps to test word file for detailed execution instructions.
+ **POSTMAN collections added in Documents folder
 
 Implemented use cases
 
